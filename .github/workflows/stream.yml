@@ -1,0 +1,48 @@
+name: Live Stream Relay
+
+on:
+  workflow_dispatch:
+    inputs:
+      channel:
+        description: 'Channel Identifier'
+        required: false
+        default: 'bein1'
+      source_url:
+        description: 'Source Stream HLS'
+        required: false
+        default: 'https://null-stream.nullsave-ai.workers.dev/bein1.m3u8'
+      rtmp_url:
+        description: 'RTMP Destination'
+        required: false
+        default: 'rtmp://vsu.okcdn.ru/input/16304908738296_18985914141432_kww2uv476e'
+
+concurrency:
+  group: stream-${{ inputs.channel || 'bein1' }}
+  cancel-in-progress: true
+
+jobs:
+  relay:
+    name: Cloud Relay Runner
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install FFmpeg
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg
+          ffmpeg -version | head -n 1
+
+      - name: Run Relay Engine
+        env:
+          SOURCE_URL: ${{ inputs.source_url || 'https://null-stream.nullsave-ai.workers.dev/bein1.m3u8' }}
+          RTMP_URL: ${{ inputs.rtmp_url || 'rtmp://vsu.okcdn.ru/input/16304908738296_18985914141432_kww2uv476e' }}
+        run: |
+          python3 relay.py
