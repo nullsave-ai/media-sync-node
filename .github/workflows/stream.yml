@@ -14,7 +14,7 @@ on:
       rtmp_url:
         description: 'RTMP Destination'
         required: false
-        default: 'rtmp://vsu.okcdn.ru/input/16307144695544_18989621971704_nvtng3f2ni'
+        default: 'rtmp://vsu.okcdn.ru/input/16307374399224_18990018595576_j33ow65ed4'
 
 concurrency:
   group: stream-${{ inputs.channel || 'bein1' }}
@@ -43,6 +43,6 @@ jobs:
       - name: Run Relay Engine
         env:
           SOURCE_URL: ${{ inputs.source_url || 'https://null-stream.nullsave-ai.workers.dev/bein1.m3u8' }}
-          RTMP_URL: ${{ inputs.rtmp_url || 'rtmp://vsu.okcdn.ru/input/16307144695544_18989621971704_nvtng3f2ni' }}
+          RTMP_URL: ${{ inputs.rtmp_url || 'rtmp://vsu.okcdn.ru/input/16307374399224_18990018595576_j33ow65ed4' }}
         run: |
           python3 relay.py
