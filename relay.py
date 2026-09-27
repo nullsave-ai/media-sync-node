@@ -5,7 +5,7 @@ import time
 import subprocess
 
 SOURCE_URL = os.environ.get("SOURCE_URL", "https://null-stream.nullsave-ai.workers.dev/bein1.m3u8").strip()
-RTMP_URL = os.environ.get("RTMP_URL", "rtmp://vsu.okcdn.ru/input/16307374399224_18990018595576_j33ow65ed4").strip()
+RTMP_URL = os.environ.get("RTMP_URL", "rtmp://vsu.okcdn.ru/input/16231113563896_18858394847992_ewmvavj5py").strip()
 LOGO_PATH = "logo.png"
 
 print("=" * 60)
